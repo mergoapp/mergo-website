@@ -1,18 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Mergo Payment</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mergo — Payment</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Helvetica Neue", Arial, sans-serif;
+    }
+
+    body {
+      background: radial-gradient(circle at 20% 20%, #111 0%, #000 60%);
+      color: white;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .back {
+      position: fixed;
+      top: 24px;
+      left: 28px;
+      font-size: 12px;
+      letter-spacing: 2px;
+      opacity: 0.7;
+      text-decoration: none;
+      color: white;
+    }
+
+    .back:hover {
+      opacity: 1;
+    }
+
+    .card {
+      width: min(420px, 90%);
+      padding: 48px 32px;
+      text-align: center;
+      border-radius: 24px;
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.12);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+    }
+
+    .logo {
+      font-size: 42px;
+      letter-spacing: 10px;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+
+    .subtitle {
+      opacity: 0.7;
+      margin-bottom: 36px;
+      line-height: 1.5;
+    }
+
+    .pay-btn {
+      display: inline-block;
+      padding: 16px 34px;
+      border: 1px solid white;
+      letter-spacing: 2px;
+      font-size: 13px;
+      text-decoration: none;
+      color: white;
+      transition: all 0.25s ease;
+      border-radius: 10px;
+    }
+
+    .pay-btn:hover {
+      background: white;
+      color: black;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(255,255,255,0.15);
+    }
+
+    .note {
+      margin-top: 22px;
+      font-size: 12px;
+      opacity: 0.5;
+    }
+  </style>
 </head>
-<body style="background:black;color:white;font-family:Arial;text-align:center;padding-top:100px;">
 
-  <h1>MERGO</h1>
-  <p>Complete your payment</p>
+<body>
 
-  <a href="PASTE_RAZORPAY_LINK_HERE" target="_blank"
-     style="border:1px solid white;padding:14px 28px;color:white;text-decoration:none;">
-     PAY NOW
-  </a>
+  <a href="/" class="back">BACK</a>
+
+  <div class="card">
+    <div class="logo">MERGO</div>
+
+    <div class="subtitle">
+      Unlock premium access and elevate your Mergo experience.
+    </div>
+
+    <!-- 🔴 REPLACE THIS LINK -->
+    <a href="PASTE_YOUR_RAZORPAY_LINK_HERE"
+       target="_blank"
+       class="pay-btn">
+       PAY NOW
+    </a>
+
+    <div class="note">
+      Secure payments powered by Razorpay
+    </div>
+  </div>
 
 </body>
 </html>
