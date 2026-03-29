@@ -59,13 +59,17 @@ button {
 
 <div class="container">
 
-<form id="form">
+<form 
+  action="https://script.google.com/macros/s/AKfycbz4wuj3qfRLyehvAzKuUne3i6cpSPEvRWwVjC0M_iUH0rmiV8htrCqPuy-l6sP9378xOg/exec"
+  method="GET"
+  target="_blank"
+>
 
-  <input id="name" placeholder="Full Name" required>
-  <input id="phone" placeholder="Phone Number" required>
-  <input id="instagram" placeholder="Instagram Handle" required>
+  <input name="name" placeholder="Full Name" required>
+  <input name="phone" placeholder="Phone Number" required>
+  <input name="instagram" placeholder="Instagram Handle" required>
 
-  <select id="entry" required>
+  <select name="entry" required>
     <option value="">Select Entry Type</option>
     <option>Single Lady</option>
     <option>Couple</option>
@@ -81,29 +85,6 @@ button {
 </div>
 
 </div>
-
-<script>
-document.getElementById("form").addEventListener("submit", function(e){
-  e.preventDefault();
-
-  const name = document.getElementById("name").value;
-  const phone = document.getElementById("phone").value;
-  const instagram = document.getElementById("instagram").value;
-  const entry = document.getElementById("entry").value;
-
-  const url = "https://script.google.com/macros/s/AKfycbz4wuj3qfRLyehvAzKuUne3i6cpSPEvRWwVjC0M_iUH0rmiV8htrCqPuy-l6sP9378xOg/exec"
-    + "?name=" + encodeURIComponent(name)
-    + "&phone=" + encodeURIComponent(phone)
-    + "&instagram=" + encodeURIComponent(instagram)
-    + "&entry=" + encodeURIComponent(entry);
-
-  fetch(url);
-
-  alert("You're on the list 🚀");
-
-  document.getElementById("form").reset();
-});
-</script>
 
 </body>
 </html>
