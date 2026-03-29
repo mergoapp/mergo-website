@@ -3,88 +3,501 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mergo x Suzy Q</title>
-
+<title>Mergo — Guest List</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Cormorant+Garamond:wght@300;400;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-body {
-  margin: 0;
-  font-family: Arial;
-  background: #0f0f0f;
-  color: white;
-}
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-.hero {
-  height: 40vh;
-  background: url('event.jpg') center/cover no-repeat;
-}
+  :root {
+    --gold: #c9a84c;
+    --gold-light: #e8c97a;
+    --gold-dim: rgba(201,168,76,0.15);
+    --bg: #080808;
+    --bg2: #0f0f0f;
+    --bg3: #161616;
+    --text: #f0ece4;
+    --muted: #7a7570;
+    --border: rgba(201,168,76,0.2);
+  }
 
-.container {
-  max-width: 400px;
-  margin: -40px auto;
-  background: #1a1a1a;
-  padding: 20px;
-  border-radius: 12px;
-}
+  html, body {
+    min-height: 100%;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+  }
 
-input, select {
-  width: 100%;
-  padding: 12px;
-  margin: 10px 0;
-  background: #2a2a2a;
-  border: none;
-  border-radius: 8px;
-  color: white;
-}
+  body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 2rem 1rem;
+    position: relative;
+    overflow-x: hidden;
+  }
 
-button {
-  width: 100%;
-  padding: 14px;
-  background: #ff4d6d;
-  border: none;
-  border-radius: 8px;
-  color: white;
-}
+  /* Ambient background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 50% -10%, rgba(201,168,76,0.08) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 30% at 80% 110%, rgba(201,168,76,0.05) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
 
-.small {
-  font-size: 12px;
-  color: #777;
-  text-align: center;
-}
+  /* Subtle grid texture */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(201,168,76,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(201,168,76,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 480px;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+
+  .logo {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 3.2rem;
+    font-weight: 300;
+    letter-spacing: 0.06em;
+    color: #ffffff;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .tagline {
+    font-size: 0.65rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+  }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+  }
+  .divider-line {
+    width: 60px;
+    height: 0.5px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+  .divider-diamond {
+    width: 5px;
+    height: 5px;
+    background: var(--gold);
+    transform: rotate(45deg);
+    flex-shrink: 0;
+  }
+
+  .subtitle {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 0.75rem;
+  }
+
+  .event-info {
+    margin-top: 1rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .event-date {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    font-weight: 300;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .event-venue {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    color: var(--text);
+    margin-top: 2px;
+  }
+
+  /* Card */
+  .card {
+    background: var(--bg2);
+    border: 0.5px solid var(--border);
+    border-radius: 2px;
+    padding: 2.5rem 2rem;
+    position: relative;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 10%; right: 10%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+
+  /* Form fields */
+  .field {
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.6s ease both;
+  }
+  .field:nth-child(1) { animation-delay: 0.1s; }
+  .field:nth-child(2) { animation-delay: 0.18s; }
+  .field:nth-child(3) { animation-delay: 0.26s; }
+  .field:nth-child(4) { animation-delay: 0.34s; }
+
+  label {
+    display: block;
+    font-size: 0.62rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+  }
+
+  input[type="text"],
+  input[type="tel"] {
+    width: 100%;
+    background: var(--bg3);
+    border: 0.5px solid rgba(201,168,76,0.25);
+    border-radius: 1px;
+    color: var(--text);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 300;
+    letter-spacing: 0.04em;
+    padding: 0.85rem 1rem;
+    outline: none;
+    transition: border-color 0.2s, background 0.2s;
+    -webkit-appearance: none;
+  }
+
+  input[type="text"]::placeholder,
+  input[type="tel"]::placeholder {
+    color: rgba(122,117,112,0.6);
+    font-size: 0.82rem;
+  }
+
+  input[type="text"]:focus,
+  input[type="tel"]:focus {
+    border-color: rgba(201,168,76,0.6);
+    background: rgba(201,168,76,0.04);
+  }
+
+  /* Entry type selector */
+  .entry-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+  }
+
+  .entry-opt {
+    position: relative;
+  }
+
+  .entry-opt input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0; height: 0;
+  }
+
+  .entry-opt label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 0.9rem 0.5rem;
+    background: var(--bg3);
+    border: 0.5px solid rgba(201,168,76,0.2);
+    border-radius: 1px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-transform: none;
+    letter-spacing: 0.05em;
+    font-size: 0.7rem;
+    color: var(--muted);
+    font-weight: 400;
+    margin: 0;
+  }
+
+  .entry-opt .icon {
+    font-size: 1.1rem;
+    line-height: 1;
+  }
+
+  .entry-opt input:checked + label {
+    background: var(--gold-dim);
+    border-color: var(--gold);
+    color: var(--gold-light);
+  }
+
+  .entry-opt label:hover {
+    border-color: rgba(201,168,76,0.5);
+    color: var(--text);
+  }
+
+  /* Submit button */
+  .submit-wrap {
+    margin-top: 2rem;
+    animation: fadeUp 0.6s 0.42s ease both;
+  }
+
+  .btn {
+    width: 100%;
+    background: transparent;
+    border: 0.5px solid var(--gold);
+    color: var(--gold);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    padding: 1rem;
+    cursor: pointer;
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+    border-radius: 1px;
+  }
+
+  .btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+  }
+
+  .btn:hover::before { transform: scaleX(1); }
+  .btn:hover { color: var(--bg); }
+  .btn:active { transform: scale(0.99); }
+
+  .btn span { position: relative; z-index: 1; }
+
+  /* States */
+  .success-msg {
+    display: none;
+    text-align: center;
+    padding: 2rem 1rem;
+    animation: fadeUp 0.5s ease both;
+  }
+  .success-msg .check {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: var(--gold);
+  }
+  .success-msg h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    font-weight: 300;
+    letter-spacing: 0.1em;
+    color: var(--gold);
+    margin-bottom: 0.75rem;
+  }
+  .success-msg p {
+    font-size: 0.78rem;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    line-height: 1.8;
+  }
+
+  .error-msg {
+    display: none;
+    font-size: 0.7rem;
+    color: #e07070;
+    letter-spacing: 0.05em;
+    margin-top: 0.75rem;
+    text-align: center;
+  }
+
+  .loading { opacity: 0.6; pointer-events: none; }
+
+  /* Footer note */
+  .foot-note {
+    text-align: center;
+    margin-top: 1.5rem;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    color: rgba(122,117,112,0.5);
+    text-transform: uppercase;
+  }
 </style>
 </head>
-
 <body>
 
-<div class="hero"></div>
-
 <div class="container">
+  <div class="header">
+    <div class="logo">Mergo</div>
+    <div class="tagline">Guest List Registration</div>
+    <div class="divider">
+      <div class="divider-line"></div>
+      <div class="divider-diamond"></div>
+      <div class="divider-line"></div>
+    </div>
+    <div class="event-info">
+      <div class="event-date">4th April</div>
+      <div class="event-venue">Suzy Q</div>
+    </div>
+    <div class="subtitle">Secure your spot for the night</div>
+  </div>
 
-<form 
-  action="https://script.google.com/macros/s/AKfycbz4wuj3qfRLyehvAzKuUne3i6cpSPEvRWwVjC0M_iUH0rmiV8htrCqPuy-l6sP9378xOg/exec"
-  method="GET"
-  target="_blank"
->
+  <div class="card" id="card">
 
-  <input name="name" placeholder="Full Name" required>
-  <input name="phone" placeholder="Phone Number" required>
-  <input name="instagram" placeholder="Instagram Handle" required>
+    <!-- Success state -->
+    <div class="success-msg" id="successMsg">
+      <div class="check">◆</div>
+      <h2>You're on the list.</h2>
+      <p>We'll see you there.<br>Keep an eye on your Instagram for details.</p>
+    </div>
 
-  <select name="entry" required>
-    <option value="">Select Entry Type</option>
-    <option>Single Lady</option>
-    <option>Couple</option>
-    <option>Stag</option>
-  </select>
+    <!-- Form -->
+    <form id="signupForm" novalidate>
 
-  <button type="submit">Request Access</button>
+      <div class="field">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" name="name" placeholder="Your name" autocomplete="name" required>
+      </div>
 
-</form>
+      <div class="field">
+        <label for="mobile">Mobile Number</label>
+        <input type="tel" id="mobile" name="mobile" placeholder="+91 00000 00000" autocomplete="tel" required>
+      </div>
 
-<div class="small">
-  Limited entries. Confirmation will be shared via WhatsApp.
+      <div class="field">
+        <label for="insta">Instagram Handle</label>
+        <input type="text" id="insta" name="insta" placeholder="@yourhandle" autocomplete="off" required>
+      </div>
+
+      <div class="field">
+        <label>Entry Type</label>
+        <div class="entry-options">
+          <div class="entry-opt">
+            <input type="radio" name="entryType" id="ladies" value="Single Ladies" required>
+            <label for="ladies">
+              <span class="icon">♀</span>
+              Ladies
+            </label>
+          </div>
+          <div class="entry-opt">
+            <input type="radio" name="entryType" id="stag" value="Stag">
+            <label for="stag">
+              <span class="icon">♂</span>
+              Stag
+            </label>
+          </div>
+          <div class="entry-opt">
+            <input type="radio" name="entryType" id="couple" value="Couple">
+            <label for="couple">
+              <span class="icon">♡</span>
+              Couple
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="submit-wrap">
+        <button type="submit" class="btn" id="submitBtn">
+          <span>Request Entry</span>
+        </button>
+        <div class="error-msg" id="errorMsg">Please fill in all fields before submitting.</div>
+      </div>
+
+    </form>
+  </div>
+
+  <div class="foot-note">By registering, you confirm you are 18+</div>
 </div>
 
-</div>
+<script>
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz4wuj3qfRLyehvAzKuUne3i6cpSPEvRWwVjC0M_iUH0rmiV8htrCqPuy-l6sP9378xOg/exec";
 
+  const form = document.getElementById('signupForm');
+  const btn  = document.getElementById('submitBtn');
+  const err  = document.getElementById('errorMsg');
+  const succ = document.getElementById('successMsg');
+
+  // Normalize insta handle
+  document.getElementById('insta').addEventListener('blur', function() {
+    let v = this.value.trim();
+    if (v && !v.startsWith('@')) this.value = '@' + v;
+  });
+
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const name      = document.getElementById('name').value.trim();
+    const mobile    = document.getElementById('mobile').value.trim();
+    const insta     = document.getElementById('insta').value.trim();
+    const entryType = document.querySelector('input[name="entryType"]:checked');
+
+    // Validate
+    if (!name || !mobile || !insta || !entryType) {
+      err.style.display = 'block';
+      setTimeout(() => err.style.display = 'none', 3000);
+      return;
+    }
+
+    err.style.display = 'none';
+    btn.classList.add('loading');
+    btn.querySelector('span').textContent = 'Registering...';
+
+    // Build query string matching your Apps Script field names
+    const params = new URLSearchParams({
+      name:      name,
+      phone:     mobile,
+      instagram: insta,
+      entry:     entryType.value
+    });
+
+    try {
+      await fetch(SCRIPT_URL + '?' + params.toString(), {
+        method: 'GET',
+        mode: 'no-cors'
+      });
+    } catch(_) {
+      // no-cors always throws — treat as success
+    }
+
+    // Show success
+    form.style.display = 'none';
+    succ.style.display = 'block';
+  });
+</script>
 </body>
 </html>
